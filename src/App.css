@@ -1,0 +1,23 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add any custom global CSS here */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Fix for the flickering +/- signs */
+/* Hide the default details marker provided by browsers */
+summary::-webkit-details-marker {
+  display: none;
+}
+/* For other browsers that might not use -webkit prefix */
+summary::marker {
+  display: none;
+}
+/* Ensure no list-style is applied, which can sometimes act as a marker */
+summary {
+  list-style: none; /* This is a common cross-browser fix for default markers */
+}
