@@ -269,6 +269,7 @@ function App() {
   // State to control which details element is currently open.
   // By default, the first category is open.
   const [openCategory, setOpenCategory] = useState(colorData[0].category);
+  const [copiedValue, setCopiedValue] = useState('');
 
   // Function to handle the toggle of a details element.
   // This function now explicitly prevents the default browser behavior
@@ -276,6 +277,12 @@ function App() {
   const handleToggle = (event, category) => {
     event.preventDefault(); // Prevent the default details toggle behavior
     setOpenCategory(prev => prev === category ? null : category);
+  };
+
+  const handleCopy = (value) => {
+    navigator.clipboard.writeText(value);
+    setCopiedValue(value);
+    setTimeout(() => setCopiedValue(''), 2000); // Reset after 2 seconds
   };
 
   return (
@@ -320,9 +327,19 @@ function App() {
                 {/* Color information (name and hex code) */}
                 <div className="p-3 text-center w-full">
                   <p className="font-medium text-gray-800 text-lg">{color.name}</p>
-                  <p className="text-gray-600 text-sm font-mono">{color.rgb}</p>
+                  <p
+                    className="text-gray-600 text-sm font-mono cursor-pointer"
+                    onClick={() => handleCopy(color.rgb)}
+                  >
+                    {copiedValue === color.rgb ? 'Copied!' : color.rgb}
+                  </p>
                   {/* Display OKLCH value */}
-                  <p className="text-gray-600 text-sm font-mono">{color.oklch}</p>
+                  <p
+                    className="text-gray-600 text-sm font-mono cursor-pointer"
+                    onClick={() => handleCopy(color.oklch)}
+                  >
+                    {copiedValue === color.oklch ? 'Copied!' : color.oklch}
+                  </p>
                 </div>
               </div>
             ))}
